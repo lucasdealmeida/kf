@@ -2,6 +2,7 @@
 
 namespace App\Refund;
 
+use App\Refund\Method\CreditRefundMethod;
 use App\Stripe\CancelCharge;
 use App\Models\Purchase;
 use App\Refund\Method\CreditCardRefundMethod;
@@ -38,14 +39,14 @@ class Refund
 
     protected function getMethod()
     {
-        if (in_array($this->purchaseTransaction->source, ['KickfurtherCredits', 'KickfurtherFunds'])) {
-            return new FundsRefundMethod($this->purchaseTransaction, $this->purchaseTransaction->source);
+        if ($this->purchaseTransaction->source == 'KickfurtherFunds') {
+            return new FundsRefundMethod($this->purchaseTransaction, 'KickfurtherFunds');
         }
 
         if ($this->purchaseTransaction->source == 'CreditCard' and $this->purchase->buyer->refund_pref == 'cc') {
-            return new CreditCardRefundMethod($this->purchaseTransaction, $this->purchaseTransaction->source);
+            return new CreditCardRefundMethod($this->purchaseTransaction, 'CreditCard');
         }
 
-        return new FundsRefundMethod($this->purchaseTransaction, 'KickfurtherCredits');
+        return new CreditRefundMethod($this->purchaseTransaction, 'KickfurtherCredits');
     }
 }
