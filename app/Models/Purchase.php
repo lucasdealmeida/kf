@@ -9,6 +9,11 @@ class Purchase extends Model
 {
     use HasFactory;
 
+    public function coop()
+    {
+        return $this->belongsTo(Coop::class);
+    }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

@@ -22,6 +22,10 @@ class BuyerFactory extends Factory
      */
     public function definition()
     {
-        //
+        return [
+            'username'    => $this->faker->unique()->userName,
+            'email'       => $this->faker->safeEmail,
+            'refund_pref' => 'credits',
+        ];
     }
 }

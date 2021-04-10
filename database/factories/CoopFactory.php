@@ -22,10 +22,20 @@ class CoopFactory extends Factory
     public function definition()
     {
         return [
-            'brand_id' => \App\Models\Brand::factory(),
-            'name' => $this->faker->word,
+            'brand_id'        => \App\Models\Brand::factory(),
+            'name'            => $this->faker->word,
             'expiration_date' => now()->addWeeks(2),
-            'goal' => $this->faker->randomFloat(2, 1000, 1000000),
+            'goal'            => $this->faker->randomFloat(2, 1000, 1000000),
+            'status'          => $this->faker->randomElement(['active', 'canceled', 'refunding']),
         ];
+    }
+
+    public function expired()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'expiration_date' => now()->subDays(rand(1, 40)),
+            ];
+        });
     }
 }

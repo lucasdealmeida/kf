@@ -9,14 +9,7 @@ class Coop extends Model
 {
     use HasFactory;
 
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'creating' => \App\Events\CoopCreating::class,
-    ];
+    protected $fillable = ['status'];
 
     public function purchases()
     {
@@ -31,5 +24,15 @@ class Coop extends Model
     public function hasBeenFullyFunded()
     {
         return $this->purchases->sum->amount >= $this->goal;
+    }
+
+    public function scopeExpired($query)
+    {
+        return $query->where('expiration_date', '<=', now());
+    }
+
+    public function scopeOfStatus($query, $status)
+    {
+        return $query->where('status', $status);
     }
 }
