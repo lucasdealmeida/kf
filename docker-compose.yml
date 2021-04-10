@@ -1,0 +1,20 @@
+version: '2'
+services:
+  kf_app:
+    container_name: kf_app
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    shm_size: '2gb'
+  kf_db:
+    image: mysql:5.7
+    container_name: kf_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=kf
