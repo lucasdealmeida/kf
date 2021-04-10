@@ -25,7 +25,7 @@ class BuyerFactory extends Factory
         return [
             'username'    => $this->faker->unique()->userName,
             'email'       => $this->faker->safeEmail,
-            'refund_pref' => 'credits',
+            'refund_pref' => $this->faker->randomElement(['credit', 'cc']),
         ];
     }
 }

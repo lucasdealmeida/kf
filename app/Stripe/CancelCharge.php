@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Stripe;
+namespace App\Stripe;
 
 class CancelCharge
 {
@@ -12,7 +12,7 @@ class CancelCharge
      */
     public function refund(string $identifier)
     {
-        sleep(10);
+        sleep(1);
 
         return true;
     }

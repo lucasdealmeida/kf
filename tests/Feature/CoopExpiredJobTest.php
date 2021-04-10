@@ -63,6 +63,8 @@ class CoopExpiredJobTest extends TestCase
     /** @test */
     public function change_the_status_to_refunding_when_goal_is_not_achieve_and_coop_has_paid_purchases()
     {
+        Queue::fake();
+
         $coop = Coop::factory()->expired()->create([
             'status' => 'active',
             'goal' => 20

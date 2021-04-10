@@ -17,9 +17,9 @@ class CoopExpiredCommandTest extends TestCase
     {
         Queue::fake();
 
-        $coop1 = Coop::factory()->expired()->create();
+        $coop1 = Coop::factory()->expired()->create(['status' => 'active']);
 
-        $coop2 = Coop::factory()->expired()->create();
+        $coop2 = Coop::factory()->expired()->create(['status' => 'active']);
 
         Coop::factory()->count(10)->create();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Stripe;
+namespace App\Stripe;
 
 class RefundCharge
 {
@@ -12,7 +12,7 @@ class RefundCharge
      */
     public function refund(string $token, int $amount)
     {
-        sleep(10);
+        sleep(1);
 
         return true;
     }

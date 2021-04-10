@@ -37,7 +37,6 @@ class TransactionFactory extends Factory
                 'withdrawfee',
             ]),
             'amount' => $this->faker->randomFloat(2, 0, 75000),
-            'status' => 'completed',
             'source' => $this->faker->randomElement(\App\Models\Transaction::sources()),
             'memo' => $this->faker->sentence,
             'is_canceled' => false,

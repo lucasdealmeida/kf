@@ -2,13 +2,16 @@
 
 namespace App\Jobs;
 
+use App\Mail\CoopRefunded;
 use App\Models\Purchase;
+use App\Refund\Refund;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class RefundPurchaseJob implements ShouldQueue
 {
@@ -33,6 +36,14 @@ class RefundPurchaseJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $this->purchase->update(['coop_canceled' => true]);
+
+        tap(new Refund($this->purchase))->make();
+
+        if (!$this->purchase->coop->purchases()->where('coop_canceled', false)->get()->count()){
+            $this->purchase->coop->update(['status' => 'canceled']);
+
+            Mail::send(new CoopRefunded($this->purchase->coop));
+        }
     }
 }
